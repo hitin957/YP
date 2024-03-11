@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Специальная техника</title>
+</head>
+<header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'Main' %}" class="nav-link px-2 text-secondary"><button class="btn btn-warning rounded-pill px-3" type="button">Главная страница</button></a></li>
+          <li><a href="{% url 'Manager' %}" class="nav-link px-2 text-secondary"><button class="btn btn-warning rounded-pill px-3" type="button">Страница менеджера</button></a></li>
+        </ul>
+      </div>
+    </div>
+</header>
+<body>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <div class="bg-success p-2 text-white bg-opacity-75"><center><h4>{{ message }}</h4></center></div>
+        {% endfor %}
+    </ul>
+{% endif %}
+<h2>Вывод Строительных материалов</h2>
+<center>
+    <a href="{% url 'SpeshalCarAdd' %}"><button class="btn btn-success rounded-pill px-3" type="button">Добавить</button></a>
+    <a href="{% url 'Speshal_CarSel' %}"><button class="btn btn-secondary rounded-pill px-3" type="button">Вывести всё</button></a>
+    <a href="{% url 'Speshal_CarSel' 'Гусенечная' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Гусенечная</button></a>
+    <a href="{% url 'Speshal_CarSel' 'Колёсная' %}"><button class="btn btn-danger rounded-pill px-3" type="button">Колёсная</button></a>
+    <a href="{% url 'export_Speshal_car_xls' %}"><button class="btn btn-light rounded-pill px-3" type="button">Сделать экспорт специальной техники в ексель файл</button></a>
+</center>
+<table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Название специальной техники</th>
+                <th scope="col">Описание специальной техники</th>
+                <th scope="col">Тип специальной техники</th>
+                <th scope="col">Водитель специальной техники</th>
+                <th scope="col">Изменить</th>
+                <th scope="col">Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% for foo in Speshal_CarSel %}
+                        {{ foo.pk }}
+                        <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for foo in Speshal_CarSel %}
+                        {{ foo.name }}
+                        <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for foo in Speshal_CarSel %}
+                        {{ foo.description }}
+                        <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for foo in Speshal_CarSel %}
+                        {{ foo.type_car }}
+                        <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for foo in Speshal_CarSel %}
+                        {{ foo.fk_employee.name }} {{ foo.fk_employee.surname }} {{ foo.fk_employee.middlename }}
+                        <br>
+                    {% endfor %}
+                </td>
+                 <td>
+                    {% for foo in Speshal_CarSel %}
+                        <a href="{% url 'SpeshalCarUpdate' pk=foo.pk %}"><button type="button">Изменить</button></a>
+                        <br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for foo in Speshal_CarSel %}
+                        <a href="{% url 'SpeshalCarDelete' pk=foo.pk %}"><button type="button">Удалить</button></a>
+                        <br>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+</table>
+</body>
+ <footer class="flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="text-center text-body-secondary">© 2024 строительная компания WebBuilder</p>
+    </footer>
+</html>
